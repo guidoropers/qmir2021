@@ -1,0 +1,195 @@
+---
+title: "LearnR Exercises - Week 14 - Causal Inference"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(learnrhash)
+library(highlight)
+
+data(data)
+```
+
+## Introduction
+
+Welcome back to the tutorial for week 14! It's the second to last tutorial and as always we will start with some knowledge questions to repeat the lecture part. In these exercises you will again look at the support for the European Union among the citizens of member-states. Good luck and have fun!
+
+## Exercises
+
+```{r q1, echo = FALSE}
+question("What is the general problem with causal inference for observational data?",
+  answer("The observed difference in outcomes might be caused by confounders instead of the treatment.", correct = T),
+  answer("The treatment does not work because of confounders."),
+  answer("Observational data does not tell us which units form the treatment and the control group."),
+  random_answer_order = TRUE,
+  allow_retry = T,
+  incorrect = "Hint: Check the lecture materials."
+)
+
+```
+
+
+```{r q2, echo = FALSE}
+question("What is the identification strategy for regression discontinuity designs?",
+  answer("For units close to the threshold assignment to the treatment is as-if random.", correct = T),
+  answer("All units below the threshold are the control group, all units above the threshold the treatment group."),
+  answer("The threshold is random."),
+  random_answer_order = TRUE,
+  allow_retry = T,
+  incorrect = "Hint: Check the lecture materials."
+)
+
+```
+
+
+```{r q3, echo = FALSE}
+question("What is the identification strategy for difference-in-differences designs?",
+  answer("The treatment group's change over time in absence of the treatment is equal to the control group's change over time.", correct = T),
+  answer("The outcome for the treatment group in absence of the treatment is identical to the outcome of the control group."),
+  answer("The average causal effect is the difference in the treatment group's outcome before and after the treatment."),
+  random_answer_order = TRUE,
+  allow_retry = T,
+  incorrect = "Hint: Check the lecture materials."
+)
+
+```
+
+
+
+Load the data set for this week (\"QM2021-learnr14-data.RData\") using the \"load()\" command. Note that, as always, you need to load the packages you want to use. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\").
+
+**Comment GR: The data set should be pre-loaded as `data`**
+  
+```{r exercise1, exercise = TRUE}
+# 
+```
+
+
+```{r q4, echo = F}
+
+question_text("What is the average degree of anti-authoritarianism among EU members in 2008-2010 ('cntrymean_antiaut').",
+  answer("75.7", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: Select the relevant observations with 'filter()' and use the 'mean()' command to calculate the average."
+)
+
+
+
+
+```
+
+
+```{r q5, echo = F}
+question_text("And what about the average degree of anti-authoritarianism among non-EU members in the same time frame?",
+  answer("67.2", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: Select the relevant observations with \"filter()\" and use the \"mean()\" command to calculate the average."
+
+)
+
+
+```
+
+
+In the next few tasks, you will go through the steps necessary to calculate the causal effect of EU membership on anti-authoritarian attitudes of the countries' citizens using a difference-in-differences design. In particular, you will examine what the effect of EU accession on anti-authoritarian values was for Romania (treatment unit) compared to Albania (control unit).
+
+
+
+
+Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.
+```{r exercise2, exercise = TRUE}
+
+#
+
+```
+
+
+```{r q6, echo = F}
+question_text(
+  "Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
+ # answer(0.3177, correct = T),
+  answer("0.3177", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: Following what we have done in the lab, calculate the values of \"cntrymean_antiauth\" for Romania for these two time points and subtract them from each other."
+
+)
+
+
+```
+
+
+
+Now, calculate the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to four digits after the comma.
+
+```{r exercise3, exercise = TRUE}
+#
+
+
+```
+
+
+
+```{r q7, echo = F}
+question_text(
+  "What is the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
+ # answer(-4.7695, correct = T),
+  answer("-4.7695", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: Following what we have done in the lab, calculate the values of \"cntrymean_antiauth\" for Albania for these two time points and subtract them from each other."
+
+)
+
+
+```
+
+
+What is the average treatment effect of EU accession for Romania? Round to four digits after the comma.
+
+```{r exercise4, exercise = TRUE}
+#
+
+
+```
+
+
+```{r q8, echo = F}
+question_text(
+  "What is the average treatment effect of EU accession for Romania? Round to four digits after the comma.",
+#  answer(5.0872, correct = T),
+  answer("5.0872", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: The average treatment effect for the treated (in this case, Romania) is the difference between the change in outcomes for the treatment unit (Romania) and the change in outcomes for the control unit (Albania)."
+
+)
+
+
+```
+
+
+
+```{r q9, echo = FALSE}
+question("Does this mean that anti-authoritarian attitudes in Romania ... due to EU accession?",
+  answer("increased", correct = T),
+  answer("decreased"),
+  random_answer_order = TRUE,
+  allow_retry = T,
+  incorrect = "Hint: Think about what the treatment effect means."
+)
+```
+
+
+
+
+
+
+## Submit
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui()
+```
