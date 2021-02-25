@@ -165,7 +165,7 @@ question_text(
 
 In the next question, we want you to calculate the number of eligible voters for each election and country from the `voter_turnout_perc` and the `total_vote` variables. Save the result as a new variable called `eligible_voters`. Try to figure out the formula for yourself (it is simple rule of three with percentages). If you are having trouble figuring out the formula you can use *Hint*. 
   
-```{r prepare-elig-vot, include=FALSE}
+```{r prepare-elig-vote, include=FALSE}
 ep_elections <- mutate(ep_elections, voter_turnout_perc = voter_turnout / 100)
 ```
   
