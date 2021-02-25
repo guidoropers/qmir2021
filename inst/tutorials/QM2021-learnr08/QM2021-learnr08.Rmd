@@ -111,8 +111,8 @@ Let's find out whether larger opposition parties oppose the government more ofte
 ```
 
 ```{r histogram-solution}
-ggplot(df_opposition, aes(seatshare)) + 
-  geom_histogram() + 
+ggplot(df_opposition) + 
+  geom_histogram(aes(x = seatshare)) + 
   theme_minimal() 
 ```
  
