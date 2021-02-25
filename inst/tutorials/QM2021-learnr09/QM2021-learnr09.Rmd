@@ -114,7 +114,7 @@ knitreg(model)
 ```
 
 ```{r lm_1, exercise = TRUE}
-
+model <- 
 ```
 
 **What is the the size of the estimate for seat share (rounded to two meaningful digits)?**
@@ -134,7 +134,7 @@ Let's use the model to calculate the predicted share of opposed votes for meanin
 
 **According to our model, how much more/less do parties with a seat share of 10% oppose the government on average in comparison to a party with a seat share of 30% holding all other variables at their mean/median? Please provide the answer in percent with two significant (non-zero) digits.**
 
-*(Hint: If you stored the regression output in a separate object in the previous task, you are able to access the object here. Alternatively, you can also re-run the regression in this chunk.)*
+*(Hint: The regression output is already stored in the object `model`. Alternatively, you can also re-run the regression in this chunk.)*
 
 ```{r predict_sol, eval = F, echo = F}
 model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
@@ -155,7 +155,13 @@ predict(model, newdata = df_scenario) %>% round(2)*100
 (predict(model, newdata = df_scenario)[1]-predict(model, newdata = df_scenario)[2]) %>% round(2)*100
 ```
 
-```{r predict, exercise=TRUE, exercise.setup = "lm_1"}
+```{r predict-setup}
+model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+              y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
+
+```
+
+```{r predict, exercise=TRUE}
 
 ```
 
@@ -163,8 +169,10 @@ predict(model, newdata = df_scenario) %>% round(2)*100
 question_text(
   "The difference in the share of votes opposing the government between parties with a seat share of 10% and 30% is __ percentage points.",
   answer("11", correct = T),
+  answer("12", correct = T),
   answer("11.46", correct = F, message = "Close, but this is too detailed. Please provide the answer with two meaningful digits only."),
   answer("0.11", correct = F, message = "Please provide the answer in percentage points."),
+  answer("0.12", correct = F, message = "Please provide the answer in percentage points."),
   allow_retry = T
 )
 ```
@@ -178,7 +186,13 @@ Usually, we should be very carefully interpreting control variables by themselve
 
 *Note that more than one answer can be correct.*
 
-```{r lm2, exercise=TRUE, exercise.setup = "lm_1"}
+```{r lm2-setup}
+model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+              y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
+
+```
+
+```{r lm2, exercise=TRUE}
 
 ```
 

@@ -162,7 +162,7 @@ summary(model)
 ```
 
 ```{r lm_1, exercise = TRUE}
-
+model <- 
 ```
 
 **Can you reject the null hypothesis that an opposition party's size has no effect on voting against the government at the 95% confidence level?**
@@ -197,6 +197,11 @@ model %>% tidy() %>%
   mutate(conf.low = estimate - qnorm(0.975) * std.error
 , conf.high = estimate + qnorm(0.975) * std.error) %>%
  filter(term == "seatshare")
+```
+
+```{r confint-setup}
+model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge +
+              inst_power + y_openness + importance + govtype_mod + record_threshold , data = df_opposition)
 ```
 
 ```{r confint, exercise = TRUE}
@@ -244,7 +249,13 @@ df_scenario <- tibble(
 predict(model, newdata = df_scenario, interval = "confidence") %>% round(2)*100
 ```
 
-```{r predict, exercise = TRUE, exercise.setup = "lm_1"}
+```{r predict-setup}
+model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+              y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
+```
+
+
+```{r predict, exercise = TRUE}
 
 ```
 

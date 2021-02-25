@@ -43,7 +43,7 @@ model %>% tidy() %>% filter(term == "seatshare")
 ```
 
 ```{r lm_1, exercise = TRUE}
-
+model <- 
 ```
 
 ```{r lm_1_q, echo = FALSE}
@@ -61,7 +61,7 @@ Interpreting interaction effects can be tricky. As discussed in class, there are
 
 **What is the marginal effect of the government experience variable when party size it at its minimum in comparison to when  party size is at its maximum (as well as the corresponding 95% confidence interval for the marginal effect estimates)?**
 
-*Hint: The `margins` package may be very useful for this exercise*
+*Hint: The regression output is already stored in the object `model`. And the `margins` package may be very useful for this exercise*
 
 ```{r margins_sol, echo = FALSE, eval = FALSE}
 model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
@@ -81,7 +81,14 @@ summary(mar) %>% as_tibble()
 
 ```
 
-```{r margins, exercise = TRUE, exercise.setup = "lm_1"}
+```{r margins-setup}
+model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
+                  y_openness + importance + govrange + govtype_mod + record_threshold + frequency,
+                data = df_opposition)
+```
+
+
+```{r margins, exercise = TRUE}
 
 ```
 
@@ -95,7 +102,7 @@ question_text("Enter the value of the (average) marginal effect of government ex
 
 ```{r margeff_max, echo = FALSE}
 question_text("Enter the value of the (average) marginal effect of government experience when party size is at its maximum here (rounded to two digits after the decimal):",
-  answer("-9.12", correct = T),
+  answer("-0.92", correct = T),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session, in particular, the margins() function."
 )
 ```
@@ -137,7 +144,7 @@ Estimating and reporting marginal effects is very common but can become complex,
 
 **What is the predicted (expected) average opposition share (in percent) when government experience is equal to one and party size it at its minimum in comparison to when party size is at its maximum, holding everything else at the respective mean/median. Please also calculate the corresponding 95% prediction intervals.**
 
-*Hint: The `predict` function may be very useful for this exercise*
+*Hint: The regression output is already stored in the object `model`. The `predict` function may be very useful for this exercise.*
 
 ```{r predict_sol, echo = FALSE, eval = FALSE}
 model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
@@ -162,7 +169,13 @@ predict(model, newdata = df_scenario, interval = "confidence") %>% round(2)*100
 
 ```
 
-```{r predict, exercise = TRUE, exercise.setup = "lm_1"}
+```{r predict-setup}
+model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
+                  y_openness + importance + govrange + govtype_mod + record_threshold + frequency,
+                data = df_opposition)
+```
+
+```{r predict, exercise = TRUE}
 
 ```
 
