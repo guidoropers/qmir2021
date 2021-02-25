@@ -10,7 +10,8 @@ library(learnrhash)
 gradethis::gradethis_setup()
 
 library(tidyverse)
-data(df_opposition) 
+library(qmir2021)
+df_opposition
 ```
 
 ## Getting to know your data
@@ -168,7 +169,7 @@ lm(conflict_p ~ seatshare, data = df_opposition)
 ```
 
 ```{r lm_1, exercise = TRUE}
-
+model <- 
 ```
 
 Please provide an interpretation of the estimated regression coefficient. 
@@ -193,15 +194,21 @@ Not only does the model help us understand how much the share of votes against t
 
 **According to our model, how often do parties with a seat share of 30% oppose the government on average? Please provide the answer in percent with two significant (non-zero) digits.**
 
-*(Hint: If you stored the regression output in a separate object in the previous task, you are able to access the object here. Alternatively, you can also re-run the regression in this chunk. Note that the predict function might be helpful for this task.)*
+*(Hint: The regression output is already stored in the object `model`. Note that the predict function might be helpful for this task.)*
 
 ```{r predict_sol, eval = F, echo = F}
-m1 <- lm(conflict_p ~ seatshare, data = df_opposition)
+model <- lm(conflict_p ~ seatshare, data = df_opposition)
 
-predict(m1, newdata = tibble(seatshare = .3)) %>% round(2)*100
+predict(model, newdata = tibble(seatshare = .3)) %>% round(2)*100
 ```
 
-```{r predict, exercise=TRUE, exercise.setup = "lm_1"}
+```{r predict-setup}
+model <- lm(conflict_p ~ seatshare, data = df_opposition)
+
+```
+
+
+```{r predict, exercise=TRUE}
 
 ```
 

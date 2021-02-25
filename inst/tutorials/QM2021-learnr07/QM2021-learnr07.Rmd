@@ -13,11 +13,8 @@ library(learnr)
 library(learnrhash)
 library(tidyverse)
 gradethis::gradethis_setup()
-
-data(ep_elections)
+ep_elections
 ```
-
-**Comment GR: Data is preloaded as `ep_elections`**
 
 ## Introduction
 
@@ -44,7 +41,7 @@ Below you find an overview of the data set.
 
 You can take a peek at the data using the `glimpse()` function in the box below.
 
-```{r glimpse-data, exercise = TRUE}
+```{r glimpse-data, exercise=TRUE}
 glimpse(ep_elections)
 ```
 
@@ -153,7 +150,9 @@ Next, create a boxplot and compare the 50th percentile of *voter_turnout* in Ger
 question("Is the 50th percentile in Germany...?",
          answer("higher than in Austria", correct = TRUE),
          answer("lower than in Austria", message = "Have a look at your plot again. The 50th percentile is represented by the thick line within the box."),
-         answer("the same as in Austria", message = "Have a look at your plot again. The 50th percentile is represented by the thick line within the box."))
+         answer("the same as in Austria", message = "Have a look at your plot again. The 50th percentile is represented by the thick line within the box."),
+         allow_retry = TRUE
+         )
 ```
 
 ### Voter turnout in the entire EU
@@ -182,5 +181,5 @@ learnrhash::encoder_logic()
 ```
 
 ```{r encode, echo=FALSE}
-learnrhash::encoder_ui(default_ui(url = "https://someurl.com"))
+learnrhash::encoder_ui(default_ui(url = "https://ilias.uni-mannheim.de/ilias.php?baseClass=ilObjSurveyGUI&ref_id=1097900&cmd=infoScreen"))
 ```

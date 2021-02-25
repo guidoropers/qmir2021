@@ -191,5 +191,5 @@ learnrhash::encoder_logic()
 ```
 
 ```{r encode, echo=FALSE}
-learnrhash::encoder_ui()
+learnrhash::encoder_ui(default_ui(url ="https://ilias.uni-mannheim.de/ilias.php?baseClass=ilObjSurveyGUI&ref_id=1097912&cmd=infoScreen"))
 ```
