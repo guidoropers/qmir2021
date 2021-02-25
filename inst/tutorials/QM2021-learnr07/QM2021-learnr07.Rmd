@@ -13,7 +13,7 @@ library(learnr)
 library(learnrhash)
 library(tidyverse)
 gradethis::gradethis_setup()
-data(data-learnr07-ep-elections.rda)
+
 data(ep_elections)
 ```
 
