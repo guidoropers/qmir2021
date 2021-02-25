@@ -1,0 +1,167 @@
+---
+title: "Week 04 - Data Wrangling II"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+## Packages
+library(learnr)
+library(learnrhash)
+library(tidyverse)
+gradethis::gradethis_setup()
+
+## Data
+data(parlgov_election.rda)
+data(parlgov_party.rda)
+```
+
+## Introduction
+
+This week we have talked about data wrangling. 
+
+Insert a bit more of intro prose here.
+
+### Packages
+
+For the following exercises, you'll need the **tidyverse** package. You should already have this packages installed, so you load it as usual by running the code below:
+
+```{r load-packages, exercise=TRUE}
+library(tidyverse)
+```
+
+## Data
+
+The data for this exercise comes from [Parlgov](http://www.parlgov.org/), a database on parliaments and governments for all countries in the European Union.
+
+The two data sets `parlgov_election` and `parlgov_party`, which are already loaded into the environment, contain the following variables:
+
+- `parlgov_election`
+
+| Variable name |  Description
+|:--------------|:--------------------------------
+| `country` | Abbreviated country name
+| `party` | Party name
+| `2014` | Vote share in the 2014 European Parliament elections
+| `2019` | Vote share in the 2019 European Parliament elections
+
+- `parlgov_party`
+
+| Variable name |  Description
+|:--------------|:--------------------------------
+| `country` | Abbreviated country name
+| `party` | Party name
+| `family_name` | Party family
+| `left_right` | Time-invariant party position on left-right scale
+
+## Exercises
+
+### Election results
+
+Take a peek at the election data by running the code in the box below.
+
+```{r glimpse-data, exercise = TRUE}
+head(parlgov_election)
+```
+```{r question-wide-long, echo=FALSE}
+question("Is this data set wide or long?",
+         answer("Wide", correct = TRUE),
+         answer("Long", message = "What characterizes long data? What characterizes wide data? If you need help, refer to Wickham/Grolemund (2017) Chapter 12 or the lecture material."),
+         allow_retry = TRUE
+         )
+```
+
+### Pivoting
+
+Often, we need to pivot data from a wider into a longer form.
+
+```{r question-pivot, echo=FALSE}
+question_checkbox("Why? Check all possible reasons that apply.",
+                  answer("Data in a wider format is not tidy.", correct = TRUE),
+                  answer("A longer format is required to visualize the data.", correct = TRUE),
+                  answer("Some wrong answer here"),
+                  answer("Another wrong answer here"),
+                  allow_retry = TRUE,
+                  random_answer_order = TRUE
+                  )
+
+```
+
+Pivot `parlgov_election` into a longer, tidy form. Name the two new resulting variables `election_year` and `vote_share`.
+
+```{r exercise-pivot, exercise=TRUE}
+parlgov_election_longer <- ___ %>%
+  ___(___ = ___, 
+      ___ = ___,
+      ___ = ___)
+```
+
+```{r exercise-pivot-hint-1}
+parlgov_election_longer <- ___ %>%
+  pivot____(___ = ___,
+            ___ = ___,
+            ___ = ___)
+```
+
+```{r exercise-pivot-hint-2}
+parlgov_election_longer <- ___ %>%
+  pivot_longer(___ = ___,
+               ___ = ___,
+               ___ = ___)
+```
+
+```{r exercise-pivot-hint-3}
+parlgov_election_longer <- ___ %>%
+  pivot_longer(cols = ___, 
+               names_to = ___,
+               values_to = ___)
+```
+
+### Joining data sets
+
+Next, we want to add information on the party family and left-right position from `parlgov_party` to all parties contained in `parlgov_election_longer`.
+
+```{r question-join, echo=FALSE}
+question("Which of the following joins do you need to use?",
+         answer("left_join()", correct = TRUE),
+         answer("right_join()", message = "right_join() would add the vote shares to the data set containing party family and left-right position - not the other way around. For more information check Wickham/Grolemund (2017) Chapter 13 or the lecture material."),
+         answer("full_join()", message = "full_join() would keep all observations in both data sets. For more information check Wickham/Grolemund (2017) Chapter 13 or the lecture material."),
+         answer("anti_join()", message = "anti_join() would only keep observations that do not have a match in the other data set. For more information check Wickham/Grolemund (2017) Chapter 13 or the lecture material."),
+         allow_retry = TRUE,
+         random_answer_order = TRUE
+         )
+```
+
+Now, join both data sets as described above.
+
+```{r prepare-join, include=FALSE}
+parlgov_election_longer <- pivot_longer(parlgov_election,
+                                        cols = `2014`:`2019`,
+                                        names_to = "election_year",
+                                        values_to = "vote_share")
+```
+
+```{r exercise-join, exercise=TRUE, exercise.setup="prepare-join"}
+parlgov_joined <- ___(___, ___, ___)
+```
+
+```{r exercise-join-hint-1}
+parlgov_joined <- ___(___, ___, by = ___)
+```
+
+```{r exercise-join-hint-2}
+parlgov_joined <- ___(___, ___, by = c(___, ___))
+```
+
+## Submit
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(default_ui(url = "https://someurl.com"))
+```

@@ -1,0 +1,198 @@
+---
+title: "Week 03 - Data Wrangling I"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: false
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+## Packages
+library(learnr)
+library(learnrhash)
+library(tidyverse)
+gradethis::gradethis_setup()
+
+## Data
+data(ep_elections_dw.rda)
+ep_elections <- ep_elections_dw
+rm(ep_elections_dw)
+```
+
+## Introduction
+
+This week we have talked about data wrangling. 
+
+Insert a bit more of intro prose here.
+
+### Packages
+
+For the following exercises, you'll need the **tidyverse** package. You should already have this packages installed, so you load it as usual by running the code below:
+
+```{r load-packages, exercise=TRUE}
+library(tidyverse)
+```
+
+## Data
+
+The data set for this exercise (`ep_elections`) contains information on voter turnout and total votes cast in elections for the European Parliament.
+
+Below you find an overview of the data set.
+
+| Variable name |  Description
+|:--------------|:-------------
+| `country` | Country name
+| `election_type` | Type of election
+| `year` | Year of election
+| `voter_turnout` | Voter turnout
+| `total_vote` | Total number of voters who have turned out
+
+## Exercises
+
+```{r q1, echo = FALSE}
+question("What does a relational operator do?",
+  answer("It tests the relationship between entities (values etc.)", correct = T),
+  answer("It checks whether vectors contain NAs"),
+  answer("It executes code chunks that are related to one another"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  incorrect = "Hint: Check the lecture materials."
+)
+
+```
+
+```{r q2, echo = FALSE}
+question("You have a dataset that contains information on countries, years and the name of the party with the majority of votes in the 
+  last elections. How many columns do you have?",
+  answer("Nine"),
+  answer("Three", correct = T),
+  answer("Depends on the number of years and countries in the data"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  incorrect = "Hint: Check Wickham/Grolemund (2017) Chapter 3."
+)
+
+```
+
+```{r q3, echo = FALSE}
+question("What does piping do?",
+  answer("It calculates descriptive statistics in R"),
+  answer("It allows you to combine certain dplyr functions in a specific order", correct = T),
+  answer("It allows you to write your own estimator"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  incorrect = "Hint: Check out the \"magrittr\" package."
+)
+
+```
+
+```{r q4, echo = FALSE}
+question("What command do you use in order to create a new variable which is added to all observations in the dataset 
+  (using the \"dplyr\" package)?",
+  answer("mutate()", correct = T),
+  answer("summarize()"),
+  answer("filter()"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  incorrect = "Hint: Check Wickham/Grolemund (2017) Chapter 5."
+)
+```
+
+```{r q5, echo = FALSE}
+question("What does x|y mean?",
+  answer("x not y"),
+  answer("x or y", correct = T),
+  answer("x and y"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  incorrect = "Hint: Check Wickham/Grolemund (2017) Chapter 5."
+)
+```
+
+```{r q6, echo = FALSE}
+question("You have a dataset that contains the following variables: a country ID variable, a year variable and a voter_turnout variable. 
+  You would like to calculate the median value of voter turnout per year. What do you do?",
+  answer("data %>% group_by(year) %>% mutate(median_voter_turnout = median(voter_turnout)", correct = T),
+  answer("data %>% group_by(country, year) %>% filter(median_voter_turnout = median(voter_turnout)"),
+  answer("data %>% group_by(country, year) %>% filter(median_voter_turnout = mean(voter_turnout)"),
+  allow_retry = TRUE,
+  random_answer_order = TRUE,
+  incorrect = "Hint: Think about what each of the operations is doing."
+)
+```
+
+Let's try some exercises in R. In the lab session, we have seen some commands on how manipulate data. Throughout the next set of questions, you will apply some of the things we have learned in class. You will be required to run some code, and will be asked multiple-choice questions that you need to answer based on the output of your code.
+
+How many numeric variables does the data set contain?
+
+```{r exercise1, exercise = TRUE}
+
+```
+ 
+```{r q7, echo=FALSE}
+question_text(
+  "How many numeric variables are there?",
+  answer("3", correct = TRUE),
+  answer("Three", correct = TRUE),
+  answer("three", correct = TRUE),
+  allow_retry = TRUE,
+  incorrect = "Hint: Use the \"summary()\" or \"class()\" commands or have a look at the object in the environment pane."
+
+)
+``` 
+
+It seems that something went wrong with the variable `voter_turnout` when reading in the data. 
+  Turnout should be measured in percentage. Therefore, divide the variable by 100 and save it in a new variable 
+  called `voter_turnout_perc`. Then, calculate the median of `total_vote` per country. What is the median number of 
+  `total_vote` in Germany? Round to the integer.
+
+```{r exercise2, exercise = TRUE}
+
+```
+
+```{r q8, echo = FALSE}
+question_text(
+  "What is the median? Please provide the number.",
+  answer("28088025", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: You need \"group_by()\", \"mutate()\" and \"filter()\" for this question."
+
+)
+
+```
+
+
+In the next question, we want you to calculate the number of eligible voters for each election and country from the `voter_turnout_perc` and the `total_vote` variables. Save the result as a new variable called `eligible_voters`. Try to figure out the formula for yourself (it is simple rule of three with percentages). If you are having trouble figuring out the formula you can use *Hint*. 
+  
+```{r prepare-elig-vot, include=FALSE}
+ep_elections <- mutate(ep_elections, voter_turnout_perc = voter_turnout / 100)
+```
+  
+  
+```{r elig-vot, exercise=TRUE, exercise.setup="prepare-elig-vote"}
+# How many eligible voters are there in Bulgaria in 2009?
+
+```
+  
+```{r q9, echo = F}
+question_text(
+  "How many eligible voters are there in Bulgaria in 2009? Enter the number without separators (such as . or ,) and round to the next lowest integer.",
+  answer("6684679", correct = TRUE),
+  allow_retry = TRUE,
+  incorrect = "Hint: Use the \"summary()\" or \"class()\" commands or have a look at the object in the environment pane."
+
+)
+
+```
+
+
+## Submit
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(default_ui(url = "https://someurl.com"))
+```
