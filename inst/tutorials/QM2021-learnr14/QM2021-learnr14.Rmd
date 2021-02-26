@@ -57,9 +57,9 @@ question("What is the identification strategy for difference-in-differences desi
 
 
 Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\").
-  
-```{r exercise1, exercise = TRUE}
 
+
+```{r exercise1, exercise = TRUE}
 
 ```
 
