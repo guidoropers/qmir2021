@@ -8,13 +8,6 @@ runtime: shiny_prerendered
 library(learnr)
 library(learnrhash)
 library(highlight)
-
-load("df_learnr15.rda")
-
-df_learnr15 <- df
-
-rm(df)
-
 ```
 
 

@@ -163,6 +163,7 @@ summary(model)
 
 ```{r lm_1, exercise = TRUE}
 model <- 
+
 ```
 
 **Can you reject the null hypothesis that an opposition party's size has no effect on voting against the government at the 95% confidence level?**

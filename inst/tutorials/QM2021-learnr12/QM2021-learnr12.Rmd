@@ -9,12 +9,6 @@ library(learnr)
 library(learnrhash)
 library(highlight)
 library(gradethis)
-
-load("df_learnr12.rda")
-
-df_learnr12 <- df
-
-rm(df)
 ```
 
 

@@ -12,7 +12,7 @@ gradethis::gradethis_setup()
 library(tidyverse)
 library(broom)
 library(texreg)
-df_opposition
+data(df_opposition)
 ```
 
 ## Warm-Up
