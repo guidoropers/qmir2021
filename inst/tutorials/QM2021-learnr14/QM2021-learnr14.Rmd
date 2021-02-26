@@ -9,7 +9,11 @@ library(learnr)
 library(learnrhash)
 library(highlight)
 
-data(df_learnr14)
+load("df_learnr14.rda")
+
+df_learnr14 <- data
+
+rm(data)
 
 ```
 
@@ -59,10 +63,9 @@ question("What is the identification strategy for difference-in-differences desi
 
 
 
-Load the data set for this week (\"QM2021-learnr14-data.RData\") using the \"load()\" command. Note that, as always, you need to load the packages you want to use. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\").
+Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\").
   
 ```{r exercise1, exercise = TRUE}
-
 
 
 ```

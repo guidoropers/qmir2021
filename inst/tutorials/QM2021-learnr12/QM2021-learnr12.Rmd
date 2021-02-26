@@ -10,7 +10,11 @@ library(learnrhash)
 library(highlight)
 library(gradethis)
 
-df_learnr12
+load("df_learnr12.rda")
+
+df_learnr12 <- df
+
+rm(df)
 ```
 
 
@@ -79,7 +83,7 @@ question("What happens when we use a unit-fixed effect?",
 
 ### Preparing the data
 
-We want you to create a dummy variable for democracy. The dummy should take the value "1" if the "democ"-variable takes a value greater than 6. 
+Let's take a look at our data `df_learnr12`. We want you to create a dummy variable for democracy. The dummy should take the value "1" if the "democ"-variable takes a value greater than 6. 
 
 
 ```{r exercise1, exercise = T}
