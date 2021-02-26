@@ -9,7 +9,7 @@ library(learnr)
 library(learnrhash)
 library(highlight)
 
-data(df_learnr12)
+data(df_learnr15)
 
 ```
 
@@ -36,9 +36,10 @@ question("Why is it not appropriate to use ordinary least squares for our refere
 
 ```{r q2, echo = FALSE}
 question("Why do we need a link function for logistic regression analyses?",
-  answer("Because we want to predict probabilities that only range between 0 and 1;Because that makes the derivation of the maximum likelihood easier", correct = T),
+  answer("Because we want to predict probabilities that only range between 0 and 1.", correct = T),
   answer("Because the variance needs to be logged in order to obtain predictions."),
   answer("Because logistic regression models analyse the responses of people participating in surveys."),
+  answer("Because that makes the derivation of the maximum likelihood easier."),
   random_answer_order = TRUE,
   allow_retry = T,
   incorrect = "Hint: Consider the special feature of dependent variables in logistic regressions."
@@ -47,10 +48,9 @@ question("Why do we need a link function for logistic regression analyses?",
 ```
 
 
-Now let's have a look at the Brexit referendum again. You will reproduce Table 2 from Hobolt (2016, p.1268). Load the data set for this week (\"QM2021-learnr-data15.csv\") using the \"read_csv2()\" command. Note that, as always,   you need to load any packages you want to use. What is the mean age of females in the data set? Round to one decimal if necessary.
+Now let's have a look at the Brexit referendum again. You will reproduce Table 2 from Hobolt (2016, p.1268). Note that, as always,   you need to load any packages you want to use. What is the mean age of females in the data set? Round to two decimals if necessary.
 
 
-**Comment GR: The data set should be pre-loaded as `df_learnr12`**
 
 
 ```{r exercise1, exercise = TRUE}
@@ -60,9 +60,9 @@ Now let's have a look at the Brexit referendum again. You will reproduce Table 2
 
 ```{r q3, echo = F}
 
-question_text("What is the mean age of females in the data set? Round to one decimal if necessary.",
+question_text("What is the mean age of females in the data set? Round to two decimal if necessary.",
 #  answer(49.7, correct = T),
-  answer("49.7", correct = T),
+  answer("49.73", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: Select the relevant observations with 'filter()' and use the 'mean()' command to calculate the average."
 )
@@ -73,7 +73,7 @@ question_text("What is the mean age of females in the data set? Round to one dec
 ```
 
 
-Now calculate the median degree of European Identity (\"EuropeanIdentity\") in the data set among males?
+Now calculate the median degree of European Identity (`EuropeanIdentity`) in the data set among males?
 
 ```{r exercise2, exercise = TRUE}
 # 
@@ -82,12 +82,12 @@ Now calculate the median degree of European Identity (\"EuropeanIdentity\") in t
 
 ```{r q4, echo = F}
 
-question_text("What is the median degree of European Identity (\"EuropeanIdentity\") in the data set among males?",
+question_text("What is the median degree of European Identity (`EuropeanIdentity`) in the data set among males?",
   answer("Four", correct = T),
   answer("four", correct = T),
   answer("4", correct = T),
   allow_retry = TRUE,
-  incorrect = "Hint: Select the relevant observations with \"filter()\" and use the \"median()\" command to calculate the median."
+  incorrect = "Hint: Select the relevant observations with `filter()` and use the `median()` command to calculate the median."
 )
 
 
@@ -96,9 +96,9 @@ question_text("What is the median degree of European Identity (\"EuropeanIdentit
 ```
 
 
-Now let's calculate a logit regression trying to explain \"LeaveVote\" with \"age\", \"female\", \"edlevel\", 
-  \"hhincome\", \"EuropeanIdentity\", \"EnglishIdentity\" and \"BritishIdentity\". Use the \"glm()\" command and don't forget to
-  specify the link function. What is the coefficient for \"EuropeanIdentity\"? Rond to four decimals.
+Now let's calculate a logit regression trying to explain `LeaveVote` with `age`, `female`, `edlevel`, 
+  `hhincome`, `EuropeanIdentity`, `EnglishIdentity` and `BritishIdentity`. Use the `glm()` command and don't forget to
+  specify the link function. What is the coefficient for `EuropeanIdentity`? Rond to four decimals.
 
 
 ```{r exercise3, exercise = TRUE}
@@ -108,7 +108,7 @@ Now let's calculate a logit regression trying to explain \"LeaveVote\" with \"ag
 
 ```{r q5, echo = F}
 
-question_text("What is the coefficient for \"EuropeanIdentity\"? Rond to four decimals.",
+question_text("What is the coefficient for `EuropeanIdentity`? Rond to four decimals.",
   answer("-0.7955", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: Consider what we did in the lab. The regression command is similar, just add the new independent variables and don't include some that we do not use anymore."
@@ -124,7 +124,7 @@ question_text("What is the coefficient for \"EuropeanIdentity\"? Rond to four de
 
 
 ```{r q6, echo = FALSE}
-question("What does the coefficient for \"EuropeanIdentity\" tell us?",
+question("What does the coefficient for `EuropeanIdentity` tell us?",
   answer("That there is a negative relationship with voting Leave", correct = T),
   answer("That there is a positive relationship with voting Leave"),
   random_answer_order = TRUE,
@@ -137,8 +137,8 @@ question("What does the coefficient for \"EuropeanIdentity\" tell us?",
 
 
 Now, let's calculate predicted probabilities. Calculate the predicted probability of voting
-  \"Leave\" for individuals with the highest value for \"EuropeanIdentity\", holding all other variables at their means or medians.
-  What is the predicted probability to vote \"Leave\" for such voters? Round to four decimals.
+  `Leave` for individuals with the highest value for `EuropeanIdentity`, holding all other variables at their means or medians.
+  What is the predicted probability to vote `Leave` for such voters? Round to two decimals.
 
 
 
@@ -150,8 +150,8 @@ Now, let's calculate predicted probabilities. Calculate the predicted probabilit
 
 ```{r q7, echo = F}
 
-question_text("  What is the predicted probability to vote \"Leave\" for such voters? Round to four decimals.",
-  answer("0.0608", correct = T),
+question_text("  What is the predicted probability to vote `Leave` for such voters? Round to two decimals.",
+  answer("0.06", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: Start with the lab code and extend the scenarios to the new variables we included. Also beware of the order of the variables in the model."
 )
@@ -163,22 +163,24 @@ question_text("  What is the predicted probability to vote \"Leave\" for such vo
 
 
 
-Now, calculate predicted probabilities, this time for the lowest value of \"EuropeanIdentity\", holding everything else at its
-  means or medians. What is the predicted probabiliy for those individuals? Again, round to four decimals.
+Now, calculate predicted probabilities, this time for the lowest value of `EuropeanIdentity`, holding everything else at its
+  means or medians. What is the predicted probabiliy for those individuals? Again, round to two decimals.
 
 
 
 ```{r exercise5, exercise = TRUE}
 # 
+
+
 ```
 
 
 ```{r q8, echo = F}
 
-question_text("What is the predicted probabiliy for those individuals? Again, round to four decimals.",
-  answer("0.8845", correct = T),
+question_text("What is the predicted probabiliy for those individuals? Again, round to two decimals.",
+  answer("0.88", correct = T),
   allow_retry = TRUE,
-  incorrect = "Hint: Same as before, only the value for \"EuropeanIdentity\" has to be changed."
+  incorrect = "Hint: Same as before, only the value for `EuropeanIdentity` has to be changed."
 )
 
 
@@ -191,8 +193,9 @@ question_text("What is the predicted probabiliy for those individuals? Again, ro
 ```{r q9, echo = FALSE}
 question("What do these predictions tell you?",
   answer("People who identify with Europe a lot have a lower probability of voting Leave than those who do not, holding everything else constant.", correct = T),
-  answer("People who identify with Europe a lot have a lower probability of voting Leave than those who do not.;People who identify with Europe a lot have a higher probability of voting Leave than those who do not."),
+  answer("People who identify with Europe a lot have a lower probability of voting Leave than those who do not."),
   answer("We cannot say anything about the relationship between high and low identification with Europe and voting Leave because the difference is not statistically significant."),
+  answer("People who identify with Europe a lot have a higher probability of voting Leave than those who do not."),
   random_answer_order = TRUE,
   allow_retry = T,
   incorrect = "Hint: Compare the predicted probabilities and the uncertainty around them."

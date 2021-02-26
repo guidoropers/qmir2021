@@ -10,8 +10,9 @@ library(learnrhash)
 library(highlight)
 library(gradethis)
 
-data(df_learnr12)
+df_learnr12
 ```
+
 
 ## Introduction
 
@@ -76,23 +77,37 @@ question("What happens when we use a unit-fixed effect?",
 
 ## Coding Exercises
 
-Let's get to the applied part of today's session! You will run a pooled model, a model including a fixed effect, compare the two and calculate predicted values for the fixed-effects model. But before we get started let's load the data called `QM2021-learnr12-data.csv'
+### Preparing the data
 
-**Comment GR: The data set should be pre-loaded as `df_learnr12`**
+We want you to create a dummy variable for democracy. The dummy should take the value "1" if the "democ"-variable takes a value greater than 6. 
 
-```{r loading_data, exercise = T}
+
+```{r exercise1, exercise = T}
+
+# Create a dummy variable for countries that score higher that 6 on the "democ"-variable.
 
 ```
 
-We want you to create a dummy variable for democracy. The dummy should take the value "1" if the "democ"-variable takes a value greater than 6. Replicate the pooled model but include an interaction for the duration of World Bank membership and the newly created dummy. 
+### Modelling
 
-What is the coefficient of the interaction?
-
-
+Replicate the pooled model from our lab session but include an interaction for the duration of World Bank membership and the newly created dummy. What is the coefficient of the interaction?
 
 
 
-```{r exercise1, exercise = TRUE}
+* `n_RAI`: The dependent variable. Measures the regional authority. 
+* `length_EU`:  Duration of EU membership in years.
+* `length_world`:  Duration of World Bank membership in years.
+* `democ`: Polity2 democracy index.
+* `gdp_capita`: Gross domestic product per capita.
+* `population_size`: Size of population.
+* `nationalization`: Nationalization of the party system.
+
+
+
+
+
+
+```{r exercise2, exercise = TRUE}
 # 
 ```
 
@@ -113,7 +128,7 @@ question_text("What is the coefficient of the interaction?",
 
 Run the same model, but include a fixed-effect for the unit. What is the coefficient for the dummy now?
 
-```{r exercise2, exercise = TRUE}
+```{r exercise3, exercise = TRUE}
 # 
 ```
 
@@ -147,12 +162,13 @@ question("Comparing the two coefficients, what do you conclude?",
 ```
 
 
-In a final step, we want to visualize the results. Remember from the last session that visualizing results can help us interpret the results. In the following section, the model has already been specified. Please calculate and plot the predicted probabilities for membership in the **World Bank**. Specify scenarios for Uruguay and Japan. 
+In a final step, we want to calcualte predicted values. Remember from the last sessions that predicted values can help us to communicate the results of our analysis. In the following section, the model has already been specified. Please calculate predicted values for membership in the **World Bank**. Specify scenarios for Uruguay and Japan. In which of the two countries in the predicted value for the maximum world bank membership higher?
+
+Include a unit fixed effect using the `country_name` variable.
 
 
-```{r exercise3, exercise = TRUE}
+```{r exercise4, exercise = TRUE}
 
-m_fe <- lm(n_RAI ~ length_EU + length_world + democ + gdp_capita + population_size + nationalization + country_name, data = data) 
 
 
 ```

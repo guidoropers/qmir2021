@@ -9,7 +9,8 @@ library(learnr)
 library(learnrhash)
 library(highlight)
 
-data(data)
+data(df_learnr14)
+
 ```
 
 ## Introduction
@@ -59,11 +60,11 @@ question("What is the identification strategy for difference-in-differences desi
 
 
 Load the data set for this week (\"QM2021-learnr14-data.RData\") using the \"load()\" command. Note that, as always, you need to load the packages you want to use. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\").
-
-**Comment GR: The data set should be pre-loaded as `data`**
   
 ```{r exercise1, exercise = TRUE}
-# 
+
+
+
 ```
 
 
@@ -101,7 +102,7 @@ In the next few tasks, you will go through the steps necessary to calculate the 
 Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.
 ```{r exercise2, exercise = TRUE}
 
-#
+
 
 ```
 
@@ -124,7 +125,7 @@ question_text(
 Now, calculate the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to four digits after the comma.
 
 ```{r exercise3, exercise = TRUE}
-#
+
 
 
 ```
@@ -148,7 +149,7 @@ question_text(
 What is the average treatment effect of EU accession for Romania? Round to four digits after the comma.
 
 ```{r exercise4, exercise = TRUE}
-#
+
 
 
 ```
