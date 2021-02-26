@@ -81,7 +81,6 @@ Let's take a look at our data `df_learnr12`. We want you to create a dummy varia
 
 
 ```{r exercise1, exercise = T}
-
 # Create a dummy variable for countries that score higher that 6 on the "democ"-variable.
 
 ```
