@@ -35,7 +35,7 @@ Don't forget to include the other control variables from last week:
 **Please specify model 6 from Tuttnauer (2018) and report the coefficient for party size. Round to two digits after the decimal.**
 
 ```{r lm_1_sol, eval=FALSE, echo = FALSE}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
+model <- lm(conflict_p ~ seatshare*ge + abs_lrdiff + govside + inst_power + 
                   y_openness + importance + govrange + govtype_mod + record_threshold + frequency,
                 data = df_opposition)
 
@@ -43,7 +43,7 @@ model %>% tidy() %>% filter(term == "seatshare")
 ```
 
 ```{r lm_1, exercise = TRUE}
-model <- 
+
 ```
 
 ```{r lm_1_q, echo = FALSE}
@@ -59,21 +59,21 @@ Interpreting interaction effects can be tricky. As discussed in class, there are
 
 ### Marginal effects
 
-**What is the marginal effect of the government experience variable when party size it at its minimum in comparison to when  party size is at its maximum (as well as the corresponding 95% confidence interval for the marginal effect estimates)?**
+**What is the marginal effect of seat share when government experience is at its minimum in comparison to when government experience is at its maximum (as well as the corresponding 95% confidence interval for the marginal effect estimates)?**
 
-*Hint: The regression output is already stored in the object `model`. And the `margins` package may be very useful for this exercise*
+*Hint: The `margins` package may be very useful for this exercise*
 
 ```{r margins_sol, echo = FALSE, eval = FALSE}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
+model <- lm(conflict_p ~ seatshare*ge + abs_lrdiff + govside + inst_power + 
                   y_openness + importance + govrange + govtype_mod + record_threshold + frequency,
                 data = df_opposition)
 
 mar <- model %>%
   margins(
     # marginal effect of which variable:
-    variables = "ge",
+    variables = "seatshare",
     # conditional on which values:
-    at = list(seatshare = c(min(df_opposition$seatshare), max(df_opposition$seatshare)))
+    at = list(ge = c(min(df_opposition$ge), max(df_opposition$ge)))
   ) 
 
 # store the marginal effects as data frame/tibble
@@ -81,44 +81,37 @@ summary(mar) %>% as_tibble()
 
 ```
 
-```{r margins-setup}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
-                  y_openness + importance + govrange + govtype_mod + record_threshold + frequency,
-                data = df_opposition)
-```
-
-
-```{r margins, exercise = TRUE}
+```{r margins, exercise = TRUE, exercise.setup = "lm_1"}
 
 ```
 
 
 ```{r margeff_min, echo = FALSE}
-question_text("Enter the value of the (average) marginal effect of government experience when party size is at its minimum here (rounded to two digits after the decimal):",
-  answer("0.38", correct = T),
+question_text("Enter the value of the (average) marginal effect of party size when government experience is at its minimum (rounded to two digits after the decimal):",
+  answer("1.92", correct = T),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session, in particular, the margins() function."
 )
 ```
 
 ```{r margeff_max, echo = FALSE}
-question_text("Enter the value of the (average) marginal effect of government experience when party size is at its maximum here (rounded to two digits after the decimal):",
-  answer("-0.92", correct = T),
+question_text("Enter the value of the (average) marginal effect of party size when government experience is at its maximum (rounded to two digits after the decimal):",
+  answer("-1.29", correct = T),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session, in particular, the margins() function."
 )
 ```
 
 ```{r margeff_low, echo = FALSE}
-question_text("Enter the value of the lower bound of the 95% confidence interval of the marginal effect of government experience when party size is at its minimum (rounded to two digits after the decimal):",
-  answer("0.06", correct = T),
-  answer("-1.56", correct = F, message = "Make sure you report the result for the marginal effect when seat share is at its minimum."),
+question_text("Enter the value of the lower bound of the 95% confidence interval of the marginal effect of party size when  government experience is at its minimum (rounded to two digits after the decimal):",
+  answer("0.95", correct = T),
+  answer("-2.71", correct = F, message = "Make sure you report the result for the marginal effect when government experience is at its minimum."),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session, in particular, the margins() function."
 )
 ```
 
 ```{r margeff_high, echo = FALSE}
-question_text("Enter the value of the upper bound of the 95% confidence interval of the marginal effect of government experience when party size is at its maximum (rounded to two digits after the decimal):",
-  answer("-0.27", correct = T),
-  answer("0.70", correct = F, message = "Make sure you report the result for the marginal effect when seat share is at its maximum."),
+question_text("Enter the value of the upper bound of the 95% confidence interval of the marginal effect of party size when  government experience is at its maximum (rounded to two digits after the decimal):",
+  answer("0.13", correct = T),
+  answer("2.90", correct = F, message = "Make sure you report the result for the marginal effect when government experience is at its maximum."),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session, in particular, the margins() function."
 )
 ```
@@ -128,11 +121,11 @@ question_text("Enter the value of the upper bound of the 95% confidence interval
 *Note that more than one answer can be correct.*
 
 ```{r margeff_interpret, echo = FALSE}
-question("The estimate of government experience...",
-  answer("is positive and statistically significant at the 95% confidence level when party size is at its minimum.", correct = T),
-  answer("is negative and statistically significant at the 95% confidence level when party size is at its maximum.", correct = T),
+question("The estimate for seat share...",
+  answer("is positive and statistically significant at the 95% confidence level when government experience is at its minimum.", correct = T),
+  answer("is negative and statistically significant at the 95% confidence level when government experience is at its maximum.", correct = F),
   answer("does not turn statistically significant at the 95% confidence level."),
-  answer("is statistically independent of party size."),
+  answer("is statistically independent of government experience."),
   random_answer_order = TRUE,
   allow_retry = T
 )
@@ -140,11 +133,11 @@ question("The estimate of government experience...",
 
 ### Predicted values
 
-Estimating and reporting marginal effects is very common but can become complex, in particular, when we are dealing with non-linear regression models. Therefore, it is often recommendable to calculate meaningful predicted values for some quantities of interest. Most of the times (and also in this case), researchers report predictions for the mean response (expected value) and not for future events. It allows them to ignore fundamental model uncertainty.
+Estimating and reporting marginal effects is very common but can become complex, in particular, when we start dealing with non-linear regression models in a few weeks. Therefore, it is often recommendable to calculate meaningful predicted values for quantities of interest. Most of the times (and also in this case), researchers report predictions for the mean response (expected value) and not for future events. It allows them to ignore fundamental model uncertainty.
 
 **What is the predicted (expected) average opposition share (in percent) when government experience is equal to one and party size it at its minimum in comparison to when party size is at its maximum, holding everything else at the respective mean/median. Please also calculate the corresponding 95% prediction intervals.**
 
-*Hint: The regression output is already stored in the object `model`. The `predict` function may be very useful for this exercise.*
+*Hint: The `predict` function may be very useful for this exercise*
 
 ```{r predict_sol, echo = FALSE, eval = FALSE}
 model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
@@ -169,13 +162,7 @@ predict(model, newdata = df_scenario, interval = "confidence") %>% round(2)*100
 
 ```
 
-```{r predict-setup}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare*ge + govside + inst_power + 
-                  y_openness + importance + govrange + govtype_mod + record_threshold + frequency,
-                data = df_opposition)
-```
-
-```{r predict, exercise = TRUE}
+```{r predict, exercise = TRUE, exercise.setup = "lm_1"}
 
 ```
 

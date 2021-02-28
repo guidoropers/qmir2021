@@ -52,13 +52,13 @@ question("Z-scores provide information on:",
 
 ```{r zscore2, echo = FALSE}
 question("Z-scores are an important statistic because...",
-  answer("they allow us to compare variation for differently scaled variables."),
-  answer("they enable us to construct a standard normal distribution."),
-  answer("all of the answer options are correct.", correct = T),
+  answer("they allow us to compare variation for differently scaled variables.", correct = T),
+  answer("they enable us to construct a standard normal distribution.", correct = T),
+  answer("they standardize random probability processes.", correct = F),
   answer("none of the answer options are correct."),
   random_answer_order = TRUE,
   allow_retry = T,
-  incorrect = "Hint: Have a look at the lecture materials."
+  incorrect = "Hint: More than one answer may be correct."
 )
 
 ```
