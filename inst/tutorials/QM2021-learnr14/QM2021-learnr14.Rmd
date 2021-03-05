@@ -12,15 +12,15 @@ library(highlight)
 
 ## Introduction
 
-Welcome back to the tutorial for week 14! It's the second to last tutorial and as always we will start with some knowledge questions to repeat the lecture part. In these exercises you will again look at the support for the European Union among the citizens of member-states. Good luck and have fun!
+Welcome back to the tutorial for week 14! It's the second to last tutorial and as always we will start with some knowledge questions to repeat the lecture. In the coding exercises you will look at the support for the European Union among the citizens of member-states. Good luck and have fun!
 
 ## Exercises
 
 ```{r q1, echo = FALSE}
 question("What is the general problem with causal inference for observational data?",
   answer("The observed difference in outcomes might be caused by confounders instead of the treatment.", correct = T),
-  answer("The treatment does not work because of confounders."),
-  answer("Observational data does not tell us which units form the treatment and the control group."),
+  answer("The treatment does not work because of confounders.", message = "Think about the role of confounders in analyses of observational data. The treatment may work, but we do not know what influence the confounders have had!"),
+  answer("Observational data does not tell us which unit is form the treatment and the control group."),
   random_answer_order = TRUE,
   allow_retry = T,
   incorrect = "Hint: Check the lecture materials."
@@ -28,25 +28,13 @@ question("What is the general problem with causal inference for observational da
 
 ```
 
-
-```{r q2, echo = FALSE}
-question("What is the identification strategy for regression discontinuity designs?",
-  answer("For units close to the threshold assignment to the treatment is as-if random.", correct = T),
-  answer("All units below the threshold are the control group, all units above the threshold the treatment group."),
-  answer("The threshold is random."),
-  random_answer_order = TRUE,
-  allow_retry = T,
-  incorrect = "Hint: Check the lecture materials."
-)
-
-```
 
 
 ```{r q3, echo = FALSE}
 question("What is the identification strategy for difference-in-differences designs?",
   answer("The treatment group's change over time in absence of the treatment is equal to the control group's change over time.", correct = T),
-  answer("The outcome for the treatment group in absence of the treatment is identical to the outcome of the control group."),
-  answer("The average causal effect is the difference in the treatment group's outcome before and after the treatment."),
+  answer("The outcome for the treatment group in absence of the treatment is identical to the outcome of the control group.", message = ""),
+  answer("The average causal effect is the difference in the treatment group's outcome before and after the treatment.", message = "What role does the control group play here?"),
   random_answer_order = TRUE,
   allow_retry = T,
   incorrect = "Hint: Check the lecture materials."
@@ -56,7 +44,7 @@ question("What is the identification strategy for difference-in-differences desi
 
 
 
-Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\").
+Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\"). 
 
 
 ```{r exercise1, exercise = TRUE}
@@ -105,7 +93,7 @@ Calculate the change in anti-authoritarian values for Romania between 2008-2010 
 
 ```{r q6, echo = F}
 question_text(
-  "Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
+  "What is the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
  # answer(0.3177, correct = T),
   answer("0.3177", correct = T),
   allow_retry = TRUE,
