@@ -123,7 +123,9 @@ question_text("What is the coefficient of the interaction?",
 ```
 
 
-Run the same model, but include a fixed-effect for the unit. What is the coefficient for the dummy now?
+Run the same model, but include a fixed-effect for the unit. Our unit is the country (`country_name`) What is the coefficient for the dummy now?
+
+
 
 ```{r exercise3, exercise = TRUE}
 # 
@@ -159,12 +161,14 @@ question("Comparing the two coefficients, what do you conclude?",
 ```
 
 
-In a final step, we want to calcualte predicted values. Remember from the last sessions that predicted values can help us to communicate the results of our analysis. In the following section, the model has already been specified. Please calculate predicted values for membership in the **World Bank**. Specify scenarios for Uruguay and Japan. In which of the two countries in the predicted value for the maximum world bank membership higher?
+In a final step, we want to calculate predicted values. Remember from the last sessions that predicted values can help us to communicate the results of our analysis. In the following section, the model has already been specified. Please calculate predicted values for membership in the **World Bank**. Specify scenarios for Uruguay and Japan. In which of the two countries is the predicted value for the maximum duration of World Bank membership higher?
 
 Include a unit fixed effect using the `country_name` variable.
 
 
 ```{r exercise4, exercise = TRUE}
+
+model1 <- lm(n_RAI ~ length_EU + length_world + democ + gdp_capita + population_size + nationalization + country_name, data = df_learnr12)
 
 
 
