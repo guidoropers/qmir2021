@@ -55,7 +55,7 @@ question("Z-scores are an important statistic because...",
   answer("they allow us to compare variation for differently scaled variables.", correct = T),
   answer("they enable us to construct a standard normal distribution.", correct = T),
   answer("they standardize random probability processes.", correct = F),
-  answer("none of the answer options are correct."),
+  answer("none of the other answer options are correct."),
   random_answer_order = TRUE,
   allow_retry = T,
   incorrect = "Hint: More than one answer may be correct."
@@ -82,15 +82,14 @@ question("The density of the standard normal distribution has a very important c
 **What is a key insight from the central limit theorem?**
 
 ```{r centrallimit, echo = FALSE}
-question("If we drew a large number of independent samples and put the resulting means in a distribution, according to the central 
-  limit theorem we would get...",
+question("According to the central limit theorem, if we draw a large number of independent samples and put the resulting means in a distribution, we will get...",
   answer("a normal distribution.", correct = T),
   answer("a binomial distribution."),
   answer("the mean of our variable."),
-  answer("none of these."),
+  answer("none of the answer options is correct."),
   random_answer_order = TRUE,
   allow_retry = T,
-  incorrect = "Hint: "
+  incorrect = "Hint: Have a look at the lecture material."
 )
 
 ```
@@ -143,6 +142,9 @@ question("A 95% confidence interval means:",
 
 ## Inference in regression analysis
 
+We keep working with the data on opposition party behavior in European national parliaments (`df_opposition`) by Tuttnauer (2018). This time, however, we want to conduct statistical inference and hypothesis testing.
+
+
 Let's look again at the model that you had to specify in last week's exercise. As you might remember, you had to run a regression with `conflict_p` as dependent variable, `seatshare` as the main independent variable of interest, and the following control variables:
 
 * `abs_lrdiff`: Ideological distance from the government as the absolute difference between a party's left-right position and the size-weighted average position of the government coalition.
@@ -153,20 +155,21 @@ Let's look again at the model that you had to specify in last week's exercise. A
 * `govtype_mod`: A dummy (=1) for surplus coalitions, in contrast with minimal-winning ones (=0).
 * `record_threshold`:The percentage of MPs needed to call for a recorded vote (ranging between 0 and 0.3).
 
-**Let's re-run this model and see what we can say about our main explanatory variable in terms of its statistical significance.**
+**Plaase re-run this model and see what we can say about our main explanatory variable in terms of its statistical significance.**
 
 ```{r lm_1_sol, eval=FALSE, echo = FALSE}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge +
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge +
               inst_power + y_openness + importance + govtype_mod + record_threshold , data = df_opposition)
 summary(model)
 ```
 
 ```{r lm_1, exercise = TRUE}
+
 model <- 
 
 ```
 
-**Can you reject the null hypothesis that an opposition party's size has no effect on voting against the government at the 95% confidence level?**
+**Can you reject the null hypothesis that an size of an opposition party has no effect on voting against the government at the 95% confidence level?**
 
 *Note that more than one answer can be correct.*
 
@@ -187,7 +190,7 @@ question("The null hypothesis of no effect is ...",
 **Calculate the 95% confidence interval for the estimate of `seatshare`.**
 
 ```{r confint_sol, eval = FALSE, echo = FALSE}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge +
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge +
               inst_power + y_openness + importance + govtype_mod + record_threshold , data = df_opposition)
 
 # based on t-distribution
@@ -201,7 +204,7 @@ model %>% tidy() %>%
 ```
 
 ```{r confint-setup}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge +
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge +
               inst_power + y_openness + importance + govtype_mod + record_threshold , data = df_opposition)
 ```
 
@@ -211,8 +214,8 @@ model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge +
 
 ```{r confint_low, echo = FALSE}
 question_text("Enter the value of the lower bound of the 95% confidence interval here (rounded to two digits behind the decimal):",
-  answer("-0.10", correct = T, message = "Correct. You chose to calculate the interval based on the normal distribution. Note that some researchers prefer to calculate it based on the t-distribution which makes them more conservative."),
-  answer("-0.12", correct = T, message = "Correct. You chose to calculate the interval based on the t-distribution. Note that some researchers prefer to calculate it based on the normal distribution which makes them less conservative."),
+  answer("-0.10", correct = T, message = "You chose to calculate the interval based on the normal distribution. Note that some researchers prefer to calculate it based on the t-distribution which makes them more conservative."),
+  answer("-0.12", correct = T, message = "You chose to calculate the interval based on the t-distribution. Note that some researchers prefer to calculate it based on the normal distribution which makes them less conservative."),
     answer("-11.79", correct = F, message = "Close. Hint: Do not report the value in percent."),
   answer("-9.93", correct = F, message = "Close. Hint: Do not report the value in percent."),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session."
@@ -230,10 +233,10 @@ question_text("Enter the value of the upper bound of the 95% confidence interval
 ```
 
 
-**Calculate the 95% prediction interval for the expected opposition score of a party with a seat share of 30% keeping all other values at their respective mean/median. To facilitate the substantive interpretation, please report your result in percent and rounded to two meaningful digits (e.g., 0.23, 4.5, 13, 60, 65, 101).**
+**Calculate the 95% prediction interval for the expected opposition score of a party with a seat share of 30% keeping all other values at their respective mean/median (Remember that `govtype_mod` is a dummy variable). To facilitate the substantive interpretation, please report your result in percent and rounded to two meaningful digits (e.g., 0.23, 4.5, 13, 60, 65, 101).**
 
 ```{r predict_sol, echo = FALSE, eval = FALSE}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge + inst_power + 
               y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
 
 df_scenario <- tibble(
@@ -251,7 +254,7 @@ predict(model, newdata = df_scenario, interval = "confidence") %>% round(2)*100
 ```
 
 ```{r predict-setup}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge + inst_power + 
               y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
 ```
 
@@ -262,7 +265,7 @@ model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power +
 
 
 ```{r predict_low, echo = FALSE}
-question_text("Enter the value of the lower bound of the 95% prediction interval here:",
+question_text("Enter the value of the lower bound of the 95% prediction interval here (in percent):",
   answer("52", correct = T),
   answer("0.52", correct = F, message = "Close. Please report the value in percent for a more substantial interpretation of the result."),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session."
@@ -272,6 +275,7 @@ question_text("Enter the value of the lower bound of the 95% prediction interval
 ```{r predict_high, echo = FALSE}
 question_text("Enter the value of the upper bound of the 95% prediction interval here:",
   answer("80", correct = T),
+  answer("79", correct = F, message = "Close. Make sure to round correctly."),
   answer("80.1", correct = T, message = "Correct. However, reporting 80% would have been detailed enough."),
   answer("0.80", correct = F, message = "Close. Please report the value in percent for a more substantial interpretation of the result."),
   allow_retry = T, incorrect = "Hint: Revisit the code from the lab-session."
