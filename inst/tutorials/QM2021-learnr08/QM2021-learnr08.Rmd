@@ -16,7 +16,9 @@ df_opposition
 
 ## Getting to know your data
 
-After getting to know `R` and the `tidyverse` in previous weeks, it's now time to run your first statistical model. Before doing so , you have to load the data and should get familiar with it. Luckily, the data set is already preloaded and called `df_opposition`. It is the same data on opposition parties in national European parliaments that we used in the lab. Let's check it out. 
+After getting to know `R` and the `tidyverse` in previous weeks, it's now time to run your first statistical model in `R`. 
+
+As in the lab session, we want to better understand why and how often opposition parties vote against the government. To do so, you have to work again with the data by Tuttnauer (2016) on opposition party behavior in European national parliaments.  Luckily, the data set is already preloaded and called `df_opposition`. Before we start working with the data, you should get familiar with its structure. 
 
 **How many observations and variables does the data frame have?**
 
@@ -50,9 +52,14 @@ question_text("Enter the number of variables here:",
 ```
 
  
-As in the lab session, we want to better understand why and how often opposition parties vote against the government. Hence, the  percentage of votes opposed to the government is our dependent variable. The corresponding variable in the data set is called `conflict_p`. 
 
-**What is the median value of this variable (in percent and rounded to two meaningful (non-zero) digits (e.g., 0.23, 4.5, 13))?**
+The outcome that we want to explain is when and why opposition parties, in fact, oppose the government in legislative votes. Information on this is stored in a variable called `conflict_p` that will be the dependent variable of interest. Specifically, it  contains the percentage of votes a party confronted the government on a scale between 0 and 1.
+
+Before we run the model, it is highly recommendable to get a better sense how the variable is distributed. It will help you later to assess the substantive importance of the statistical relationships that you estimate.
+
+**What is the median percentage share of votes in which opposition parties oppose the government (in percent and rounded to two non-zero digits (e.g., 0.23, 4.5, 13))?**
+
+*Hint: For a meaningful interpretation, do not forget to transfer the median value of the variable into percentage points.*
 
 
 ```{r median_conflict_sol, echo = FALSE, eval=FALSE}
@@ -65,7 +72,7 @@ median(df_opposition$conflict_p)
 
 
 ```{r median_conflict_q, echo = FALSE}
-question("The median  of the conflict measure is (in percent and rounded to two meaningful digits):",
+question("The median percentage share of votes against the government is (in percent and rounded to two meaningful digits):",
   answer("54", correct = T),
   answer("0.5", correct = F, message = "Please report the result in percent and rounded to two digits."),
   answer("0.54", correct = F, message = "Close but remember that you are supposed to report the median in percent."),
@@ -79,7 +86,7 @@ question("The median  of the conflict measure is (in percent and rounded to two 
 ```
 
 
-**What is its standard deviation (in percent and rounded to two meaningful (non-zero) digits (e.g., 0.23, 4.5, 13))?**
+**What is its standard deviation (in percent and rounded to two non-zero digits (e.g., 0.23, 4.5, 13))?**
 
 ```{r sd_conflict-sol, echo = FALSE, eval=FALSE}
 sd(df_opposition$conflict_p) %>% round(2)*100
@@ -91,15 +98,16 @@ sd(df_opposition$conflict_p) %>% round(2)*100
 
 ```{r sd_conflict_q, echo = FALSE}
 question_text(
-  "The standard deviation of the conflict measure is (in percent and rounded to two meaningful digits):",
+  "The standard deviation of the conflict measure is (in percent and rounded to two non-zero digits):",
   answer("0.27", correct = F, message = "Close, but you were asked to report the result in percent."),
   answer("27", correct = T),
   allow_retry = TRUE
 )
 ```
 
+It's about time to get more serious with explaining opposition behavior. During a virtual lunch hour with your peers, you brainstormed ideas why some opposition parties might confront the government more often than others. One hypothesis that you came up with is that it might depend on how large a party is. The reason is straightforward: The larger a party is, the more credibly it is competing for office (for example, due to more available resources). As result, larger parties may choose to confront the government more often to present themselves as a credible alternative at the ballot box.
 
-Let's find out whether larger opposition parties oppose the government more often than smaller ones. As a proxy for party size we are taking its seat share in the parliament stored in the variable `seatshare`. Before we run the regression analysis, we should know how the variable looks like.
+So let's find out whether larger opposition parties oppose the government more often than smaller ones. As a proxy for party size we are taking its seat share in the parliament stored in the variable `seatshare`. However, before we run the regression analysis, we should know how the variable looks like.
 
 * **Have a look at the variable using a histogram.**
 * **Make the plot look nicer by using the `theme_minimal`.**
@@ -162,7 +170,9 @@ question_text(
 
 ## Bivariate regression
 
-Time to run the regression. Regress the average opposition measure (`conflict_p`) on a party's seat share (`seatshare`) using the data set `df_opposition`.
+We spent a lot of time getting to know the data. It may seem tedious at times, but it is very important to be familiar with the data that you are working with and that you will, eventually, to learn about structural relationships in the real world. But now it is finally time to run the regression. 
+
+**Regress the average opposition measure (`conflict_p`) on a party's seat share (`seatshare`) using the data set `df_opposition`.**
 
 ```{r lm_1_sol, eval=FALSE, echo = FALSE}
 lm(conflict_p ~ seatshare, data = df_opposition)
@@ -180,7 +190,7 @@ Please provide an interpretation of the estimated regression coefficient.
 question("What does the coefficient estimate tell us about the relationship between seat share and the share of opposing votes to the government?",
   answer("A one unit increase in seat share is associated with an increase of about 56% in votes against the government.", correct = F, message = "Keep in mind that reporting increases in percent is a relative measure. However, the dependent variable is measured in percentage points."),
     answer("A one unit increase in seat share causes an increase in votes against the government of about 56 percentage points.", correct = F, message = "This would only hold if you assume that there are no confounders, i.e. no unobserved factors that affect both the size of a party in parliament and its behavior vis-a-vis the government. Without randomization or further control variables, this seems not realistic to hold in practice."),
-  answer("An increase of one percentage point in vote share is associated with a an increase of about 0.56 percentage points in the the share of votes against the government.", correct = T),
+  answer("An increase of one percentage point in vote share is associated with a an increase of about 0.56 percentage points in the share of votes against the government.", correct = T),
     answer("We expect an increase of about 56 percentage points in the share of votes against the government when the seat share variable increases by one unit.", correct = T),
   random_answer_order = TRUE,
   allow_retry = T
@@ -192,7 +202,7 @@ question("What does the coefficient estimate tell us about the relationship betw
 
 Not only does the model help us understand how much the share of votes against the government is expected to change when party size increases, but it also allows us to make predictions. 
 
-**According to our model, how often do parties with a seat share of 30% oppose the government on average? Please provide the answer in percent with two significant (non-zero) digits.**
+**According to our model, how often do parties with a seat share of 30% oppose the government on average? Please provide the answer in percent with two non-zero digits.**
 
 *(Hint: The regression output is already stored in the object `model`. Note that the predict function might be helpful for this task.)*
 
@@ -224,7 +234,7 @@ question_text(
 
 ### Model assumptions
 
-As always, it's important to keep in mind what we are assuming about the models that we run on our data to **infer** what is going on in the real world.
+As always, it's important to keep in mind what we are assuming about the models to **infer** what is going on in the real world.
 
 ```{r assumptions_q1, echo = FALSE}
 question("Which key assumption is required to interpret the relationship from a linear model as causal?",

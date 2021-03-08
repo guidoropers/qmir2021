@@ -23,8 +23,8 @@ Before we start running regressions with multiple explanatory variables, let's r
 
 ```{r assumptions_q1, echo = FALSE}
 question(sprintf("Is our estimate of $\\beta_1$ biased, if we fail to include a variable that affects our outcome $y$ but is not correlated with $x_1$?"),
-  answer("Yes."),
-  answer("No.", correct = T),
+  answer("Yes.", message = "Since the omitted variable does not correlate with our variable of interest, $x_1$, the estimate will not be biased."),
+  answer("No.", correct = T, message = "However, the estimate would be biased if the omitted variable affects also correlates with $x_1$."),
   random_answer_order = TRUE,
   allow_retry = T,
   incorrect = "Hint: Have a look at the slides on omitted variable bias."
@@ -52,6 +52,7 @@ mean(df_opposition$conflict_p) %>% round(2)*100
 ```{r mean_conflict_q, echo = FALSE}
 question_text("Enter the mean percentage share of opposed votes rounded to two meaningful digits:",
   answer("56", correct = T),
+  answer("55", correct = F, message = "Make sure to round correctly.")
   answer("0.56", correct = F, message = "Provide your answer in percent."),
   answer("0.55", correct = F, message = "Provide your answer in percent and rounded to two digits."),
   answer("56.66", correct = F, message = "Too detailed. It is not really relevant whether the vote share is 0.01 % higher or lower in substantive terms. Therefore it suffices to report two non-zero digits in this case."),
@@ -60,7 +61,7 @@ question_text("Enter the mean percentage share of opposed votes rounded to two m
 ```
 
 
-**Now that we know the mean share, how many countries have an average opposition score higher than this mean?**
+**Now that we know the mean conflict share, how many countries have an average opposition score higher than this mean?**
 
 *Hint: Keep in mind how the variable is measured in the data set. It might be helpful to store the average value in a separate object first.*
 
@@ -81,15 +82,16 @@ df_opposition %>%
 
 
 ```{r cntry_conflict_q, echo = FALSE}
-question_text("Enter the number of countries with an average opposition score above the mean here:",
+question_text("Enter the number of countries (not parties) with an average opposition score above the mean here:",
   answer("7", correct = T),
+  answer("24", correct = F, message = "Note that the questions concerns the number of countries and not parties which have an average opposition score larger than the average in the data."),
   allow_retry = T
 )
 ```
 
 ## Multiple Regression
 
-Last week, we found that size of a party (`seatshare`) is associated with an increase in how often a party votes against the government. However, over the course of this week, you couldn't stop thinking about it and started fearing that there may be unobserved factors that confound the relationship between the two variables of interest both at the party level as well as at the system level. 
+Using the data on opposition party behavior in European national parliaments (`df_opposition`) by Tuttnauer (2018), we found that size of a party (`seatshare`) is associated with an increase in how often a party votes against the government in last week's session. However, over the course of this week, you couldn't stop thinking about it and started fearing that there may be unobserved factors that confound the relationship between the two variables of interest both at the party level as well as at the system level. 
 
 Specifically, one might expect that larger parties are on average ideologically closer to government parties than smaller (fringe) parties. Moreover, it is possible that larger parties have more government experience and are, therefore, likely to behave differently vis-a-vis the government than smaller parties. 
 
@@ -108,7 +110,7 @@ Luckily, the data set by Tuttnauer (2018) includes variables that measure these 
 **Run a regression of the conflict measure on seat share controlling for the above mentioned confounders.**
 
 ```{r lm_1_sol, eval=FALSE, echo = FALSE}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge + inst_power + 
               y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
 knitreg(model)
 ```
@@ -117,7 +119,7 @@ knitreg(model)
 model <- 
 ```
 
-**What is the the size of the estimate for seat share (rounded to two meaningful digits)?**
+**What is the the size of the estimate for seat share (rounded to two meaningful digits after the decimal)?**
 
 ```{r lm_1_q, echo = FALSE}
 question_text(
@@ -132,12 +134,12 @@ question_text(
 
 Let's use the model to calculate the predicted share of opposed votes for meaningful values that we may be interested in. 
 
-**According to our model, how much more/less do parties with a seat share of 10% oppose the government on average in comparison to a party with a seat share of 30% holding all other variables at their mean/median? Please provide the answer in percent with two significant (non-zero) digits.**
+**According to our model, how much more/less do parties with a seat share of 10% oppose the government on average in comparison to a party with a seat share of 30% holding all other variables at their mean/median? Please provide the answer in percentage points with two meaningful (non-zero) digits.**
 
 *(Hint: The regression output is already stored in the object `model`. Alternatively, you can also re-run the regression in this chunk.)*
 
 ```{r predict_sol, eval = F, echo = F}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge + inst_power + 
               y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
 
 df_scenario <- tibble(
@@ -156,7 +158,7 @@ predict(model, newdata = df_scenario) %>% round(2)*100
 ```
 
 ```{r predict-setup}
-model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
+model <- lm(conflict_p ~ seatshare + abs_lrdiff + ge + inst_power + 
               y_openness + importance + govtype_mod + record_threshold, data = df_opposition)
 
 ```
@@ -169,10 +171,15 @@ model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power +
 question_text(
   "The difference in the share of votes opposing the government between parties with a seat share of 10% and 30% is __ percentage points.",
   answer("11", correct = T),
+  answer("-11", correct = T),
   answer("12", correct = T),
+  answer("-12", correct = T),
   answer("11.46", correct = F, message = "Close, but this is too detailed. Please provide the answer with two meaningful digits only."),
+    answer("-11.46", correct = F, message = "Close, but this is too detailed. Please provide the answer with two meaningful digits only."),
   answer("0.11", correct = F, message = "Please provide the answer in percentage points."),
+  answer("-0.11", correct = F, message = "Please provide the answer in percentage points."),
   answer("0.12", correct = F, message = "Please provide the answer in percentage points."),
+  answer("-0.12", correct = F, message = "Please provide the answer in percentage points."),
   allow_retry = T
 )
 ```
@@ -184,7 +191,7 @@ Usually, we should be very carefully interpreting control variables by themselve
 
 **In this case, however, you are required to make an exception and provide an interpretation of the estimate for `govtype_mod` from the regression model that you ran above.**
 
-*Note that more than one answer can be correct.*
+*Note that more than one answer can be correct. You can (but don't have to) use the chunk below to re-run the model.*
 
 ```{r lm2-setup}
 model <- lm(conflict_p ~ abs_lrdiff + seatshare + ge + inst_power + 
