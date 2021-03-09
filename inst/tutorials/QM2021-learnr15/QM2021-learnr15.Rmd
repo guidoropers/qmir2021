@@ -8,6 +8,7 @@ runtime: shiny_prerendered
 library(learnr)
 library(learnrhash)
 library(highlight)
+library(gradethis)
 ```
 
 
@@ -74,7 +75,6 @@ Now calculate the median degree of European Identity (`EuropeanIdentity`) in the
 
 ```
 
-
 ```{r q4, echo = F}
 
 question_text("What is the median degree of European Identity (`EuropeanIdentity`) in the data set among males?",
@@ -95,13 +95,11 @@ Now let's calculate a logit regression trying to explain `LeaveVote` with `age`,
   `hhincome`, `EuropeanIdentity`, `EnglishIdentity` and `BritishIdentity`. Use the `glm()` command and don't forget to
   specify the link function. What is the coefficient for `EuropeanIdentity`? Rond to four decimals.
 
-
 ```{r exercise3, exercise = TRUE}
 
 
  
 ```
-
 
 ```{r q5, echo = F}
 
@@ -137,15 +135,11 @@ Now, let's calculate predicted probabilities. Calculate the predicted probabilit
   `Leave` for individuals with the highest value for `EuropeanIdentity`, holding all other variables at their means or medians.
   What is the predicted probability to vote `Leave` for such voters? Round to two decimals.
 
-
-
-
 ```{r exercise4, exercise = TRUE}
 
 
  
 ```
-
 
 ```{r q7, echo = F}
 
@@ -165,15 +159,12 @@ question_text("  What is the predicted probability to vote `Leave` for such vote
 Now, calculate predicted probabilities, this time for the lowest value of `EuropeanIdentity`, holding everything else at its
   means or medians. What is the predicted probabiliy for those individuals? Again, round to two decimals.
 
-
-
 ```{r exercise5, exercise = TRUE}
 
 
 
 
 ```
-
 
 ```{r q8, echo = F}
 

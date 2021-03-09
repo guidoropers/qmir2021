@@ -79,7 +79,6 @@ question("What happens when we use a unit-fixed effect?",
 
 Let's take a look at our data `df_learnr12`. We want you to create a dummy variable for democracy. The dummy should take the value "1" if the "democ"-variable takes a value greater than 6. 
 
-
 ```{r exercise1, exercise = T}
 # Create a dummy variable for countries that score higher that 6 on the "democ"-variable.
 
@@ -99,15 +98,9 @@ Replicate the pooled model from our lab session but include an interaction for t
 * `population_size`: Size of population.
 * `nationalization`: Nationalization of the party system.
 
-
-
-
-
-
 ```{r exercise2, exercise = TRUE}
 
 ```
-
 
 ```{r q5, echo = F}
 
@@ -125,13 +118,10 @@ question_text("What is the coefficient of the interaction?",
 
 Run the same model, but include a fixed-effect for the unit. Our unit is the country (`country_name`) What is the coefficient for the dummy now?
 
-
-
 ```{r exercise3, exercise = TRUE}
 
 
 ```
-
 
 ```{r q6, echo = F}
 
@@ -166,7 +156,6 @@ In a final step, we want to calculate predicted values. Remember from the last s
 
 Include a unit fixed effect using the `country_name` variable.
 
-
 ```{r exercise4, exercise = TRUE}
 
 model1 <- lm(n_RAI ~ length_EU + length_world + democ + gdp_capita + population_size + nationalization + country_name, data = df_learnr12)
@@ -174,9 +163,6 @@ model1 <- lm(n_RAI ~ length_EU + length_world + democ + gdp_capita + population_
 
 
 ```
-
-
-
 
 ```{r q8, echo = FALSE}
 question("Looking at the predicted values, in which country is the preiction for sub-national authority higher?",
