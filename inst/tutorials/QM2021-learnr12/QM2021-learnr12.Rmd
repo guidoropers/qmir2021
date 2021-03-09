@@ -105,7 +105,7 @@ Replicate the pooled model from our lab session but include an interaction for t
 
 
 ```{r exercise2, exercise = TRUE}
-# 
+
 ```
 
 
@@ -128,7 +128,8 @@ Run the same model, but include a fixed-effect for the unit. Our unit is the cou
 
 
 ```{r exercise3, exercise = TRUE}
-# 
+
+
 ```
 
 
