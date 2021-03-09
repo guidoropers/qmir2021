@@ -48,13 +48,9 @@ question("Why do we need a link function for logistic regression analyses?",
 
 Now let's have a look at the Brexit referendum data again (the data is stored as `df_learnr15`). You will reproduce Table 2 from Hobolt (2016, p.1268). Note that, as always,   you need to load any packages you want to use. What is the mean age of females in the data set? Round to two decimals if necessary.
 
-
-
-
 ```{r exercise1, exercise = TRUE}
 
 ```
-
 
 ```{r q3, echo = F}
 
