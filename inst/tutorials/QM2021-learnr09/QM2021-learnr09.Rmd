@@ -52,7 +52,7 @@ mean(df_opposition$conflict_p) %>% round(2)*100
 ```{r mean_conflict_q, echo = FALSE}
 question_text("Enter the mean percentage share of opposed votes rounded to two meaningful digits:",
   answer("56", correct = T),
-  answer("55", correct = F, message = "Make sure to round correctly.")
+  answer("55", correct = F, message = "Make sure to round correctly."),
   answer("0.56", correct = F, message = "Provide your answer in percent."),
   answer("0.55", correct = F, message = "Provide your answer in percent and rounded to two digits."),
   answer("56.66", correct = F, message = "Too detailed. It is not really relevant whether the vote share is 0.01 % higher or lower in substantive terms. Therefore it suffices to report two non-zero digits in this case."),
