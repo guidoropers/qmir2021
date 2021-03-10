@@ -9,6 +9,8 @@ library(learnr)
 library(learnrhash)
 library(highlight)
 library(gradethis)
+gradethis::gradethis_setup()
+
 ```
 
 
