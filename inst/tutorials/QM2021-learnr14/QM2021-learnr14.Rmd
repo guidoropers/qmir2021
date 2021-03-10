@@ -7,8 +7,10 @@ runtime: shiny_prerendered
 ```{r setup, include=FALSE}
 library(learnr)
 library(learnrhash)
+library(tidyverse)
 library(highlight)
 library(gradethis)
+gradethis::gradethis_setup()
 data(df_learnr14)
 ```
 
@@ -29,8 +31,6 @@ question("What is the general problem with causal inference for observational da
 )
 ```
 
-
-
 ```{r q3, echo = FALSE}
 question("What is the identification strategy for difference-in-differences designs?",
   answer("The treatment group's change over time in absence of the treatment is equal to the control group's change over time.", correct = T),
@@ -41,8 +41,6 @@ question("What is the identification strategy for difference-in-differences desi
   incorrect = "Hint: Check the lecture materials."
 )
 ```
-
-
 
 Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\"). 
 
