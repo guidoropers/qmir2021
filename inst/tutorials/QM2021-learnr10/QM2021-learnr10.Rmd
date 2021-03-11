@@ -164,7 +164,6 @@ summary(model)
 ```
 
 ```{r lm_1, exercise = TRUE}
-
 model <- 
 
 ```
