@@ -10,7 +10,9 @@ library(learnrhash)
 library(tidyverse)
 library(highlight)
 library(gradethis)
+
 gradethis::gradethis_setup()
+
 data(df_learnr14)
 ```
 
@@ -31,7 +33,7 @@ question("What is the general problem with causal inference for observational da
 )
 ```
 
-```{r q3, echo = FALSE}
+```{r q2, echo = FALSE}
 question("What is the identification strategy for difference-in-differences designs?",
   answer("The treatment group's change over time in absence of the treatment is equal to the control group's change over time.", correct = T),
   answer("The outcome for the treatment group in absence of the treatment is identical to the outcome of the control group.", message = ""),
@@ -42,40 +44,44 @@ question("What is the identification strategy for difference-in-differences desi
 )
 ```
 
-Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism among EU members in 2008-2010 (\"cntrymean_antiauth\"). 
+Take a look at our data-set `df_learnr14`. What is the average degree of anti-authoritarianism (`cntrymean_antiauth`) among EU members(`EU`) in 2008-2010 (`wave`). Please round to the second decimal.
 
 ```{r exercise1, exercise = TRUE}
 
 ```
 
-```{r q4, echo = F}
-question_text("What is the average degree of anti-authoritarianism among EU members in 2008-2010 ('cntrymean_antiaut').",
+```{r q3, echo = FALSE}
+question_text("What is the average degree of anti-authoritarianism among EU members in 2008-2010 ('cntrymean_antiauth').",
+  answer("75.69", correct = T),
   answer("75.7", correct = T),
+  answer("75.70", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: Select the relevant observations with 'filter()' and use the 'mean()' command to calculate the average."
 )
 ```
 
-
-```{r q5, echo = F}
+```{r q4, echo = FALSE}
 question_text("And what about the average degree of anti-authoritarianism among non-EU members in the same time frame?",
   answer("67.2", correct = T),
+  answer("67.18", correct = T),
+  answer("67.20", correct = T),
   allow_retry = TRUE,
   incorrect = "Hint: Select the relevant observations with \"filter()\" and use the \"mean()\" command to calculate the average."
+
 )
 ```
 
 In the next few tasks, you will go through the steps necessary to calculate the causal effect of EU membership on anti-authoritarian attitudes of the countries' citizens using a difference-in-differences design. In particular, you will examine what the effect of EU accession on anti-authoritarian values was for Romania (treatment unit) compared to Albania (control unit).
 
-Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.
+Calculate the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the decimal. 
+
 
 ```{r exercise2, exercise = TRUE}
 
 ```
 
-```{r q6, echo = F}
-question_text(
-  "What is the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
+```{r q5, echo = FALSE}
+question_text("What is the change in anti-authoritarian values for Romania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
  # answer(0.3177, correct = T),
   answer("0.3177", correct = T),
   allow_retry = TRUE,
@@ -87,16 +93,16 @@ Now, calculate the change in anti-authoritarian values for Albania between 2008-
 
 ```{r exercise3, exercise = TRUE}
 
-
 ```
 
-```{r q7, echo = F}
+```{r q6, echo = FALSE}
 question_text(
   "What is the change in anti-authoritarian values for Albania between 2008-2010 and 1999-2004. Round to four digits after the comma.",
  # answer(-4.7695, correct = T),
   answer("-4.7695", correct = T),
   allow_retry = TRUE,
-  incorrect = "Hint: Following what we have done in the lab, calculate the values of \"cntrymean_antiauth\" for Albania for these two time points and subtract them from each other.")
+  incorrect = "Hint: Following what we have done in the lab, calculate the values of \"cntrymean_antiauth\" for Albania for these two time points and subtract them from each other."
+)
 ```
 
 What is the average treatment effect of EU accession for Romania? Round to four digits after the comma.
@@ -106,14 +112,16 @@ What is the average treatment effect of EU accession for Romania? Round to four 
 
 ```
 
-```{r q8, echo = F}
+```{r q8, echo = FALSE}
 question_text(
   "What is the average treatment effect of EU accession for Romania? Round to four digits after the comma.",
 #  answer(5.0872, correct = T),
   answer("5.0872", correct = T),
   allow_retry = TRUE,
-  incorrect = "Hint: The average treatment effect for the treated (in this case, Romania) is the difference between the change in outcomes for the treatment unit (Romania) and the change in outcomes for the control unit (Albania).")
+  incorrect = "Hint: The average treatment effect for the treated (in this case, Romania) is the difference between the change in outcomes for the treatment unit (Romania) and the change in outcomes for the control unit (Albania)."
+)
 ```
+
 
 ```{r q9, echo = FALSE}
 question("Does this mean that anti-authoritarian attitudes in Romania ... due to EU accession?",

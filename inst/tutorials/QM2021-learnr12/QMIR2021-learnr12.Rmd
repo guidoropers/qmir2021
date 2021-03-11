@@ -1,0 +1,164 @@
+---
+title: "Learnr Exercises - Week 12 - Time-Series Cross-Sectional Analysis"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+
+library(learnr)
+library(learnrhash)
+gradethis:: gradethis_setup()
+
+library(tidyverse)
+data(df_learnr12)
+
+```
+
+
+## Introduction
+
+Welcome to this week's tutorial! In today's tutorial you will run a pooled model, a fixed-effects model, compare the results and predicted values for Japan and Uruguay! Before we run a time-series cross-sectional model, though, let's repeat some key contents of the lecture. 
+
+```{r q1, echo = FALSE}
+question("Why does it make sense to use a TSCS model?",
+  answer("To adress concerns about omitted variable bias", message = "That is correct, but are the other answer options false?"),
+  answer("To adress concerns about confounding", message = "That is correct, but are the other answer options false?"),
+  answer("To account for potential exogenous shocks", message = "That is correct, but are the other answer options false?"),
+  answer("All answer options are correct", correct = T),
+  random_answer_order = F,
+  allow_retry = T,
+  incorrect = "Hint: You may want to check the lecture materials."
+)
+```
+
+```{r q2, echo = FALSE}
+question("What is **not** constant within units?",
+  answer("The electoral system", message = "How often has the electoral system in your home-country changed in your lifetime?"),
+  answer("The unemployment rate of a country over time.", correct = T),
+  answer("Culture", message = "Though you may argue that culture is everchanging and subject to the understanding of the individual, for an FE-regression we may assume that it is somewhat constant over time."),
+  random_answer_order = TRUE,
+  allow_retry = T,
+  incorrect = "Hint: Think about how much variation there is in each answer option."
+)
+```
+
+```{r q3, echo = FALSE}
+question("When may we want to use a two-way FE model?",
+  answer("When we want to test two competing explanations", message = "We can do this with or without a fixed effect!"),
+  answer("When we want to account for two variables that are constant over time", message = "Two variables that are constant over time, but differ from unit to unit would be covered with a unit-fixed effect."),
+  answer("When we want to account for differences between units that are constant over time and for exogenous shocks that affect all units simultaneously", correct = T),
+  random_answer_order = TRUE,
+  allow_retry = T,
+  incorrect = "Hint: You may want to check the lecture materials."
+)
+```
+
+```{r q4, echo = FALSE}
+question("What happens when we use a unit-fixed effect?",
+  answer("It changes the intercept for each unit", correct = T),
+  answer("It changes the slope for each unit"),
+  answer("It runs a separate model for each unit"),
+  random_answer_order = TRUE,
+  allow_retry = T,
+  incorrect = "Hint: Check the lecture materials."
+)
+```
+
+
+## Coding Exercises
+
+In the following exercises you will need these variables:
+
+| Variable name |  Description
+|:--------------|:-------------
+| `n_RAI` | The dependent variable. Measures the regional authority
+| `length_EU` |  Duration of EU membership in years
+| `length_world` | Duration of World Bank membership in years
+| `democ` | Polity2 democracy index
+| `gdp_capita` | Gross domestic product per capita
+| `population_size` | Size of population
+| `nationalization` | Nationalization of the party system
+| `country_name` | Name of the country
+
+
+### Preparing the data and running our first model.
+
+Let's take a look at our data `df_learnr12`. We want you to create a dummy variable for democracy. The dummy should take the value "1" if the "democ"-variable takes a value greater than 6. Label this new variable `democ_dummy`.
+
+Now that you have the `democ_dummy`-variable we want you to run a pooled model. Use the following variables: `n_RAI`, `length_EU`, `length_world`, `gdp_capita`, `population_size`, `nationalization`, `length_world`. Please include an interaction between the `length_world` variable and the new `democ_dummy` variable.
+
+
+```{r exercise1, exercise = TRUE}
+# Create a dummy variable for countries that score higher than 6 on the "democ"-variable.
+
+
+# Run a model with an interaction term of the democ_dummy variable and the length_world variable.
+
+
+
+```
+
+
+```{r q5, echo = FALSE}
+question_text("What is the coefficient of the interaction? Round to two digits.",
+  answer("-0.14", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: specify the interaction with a '*' between the relevant terms."
+)
+```
+
+Run the same model, but include a fixed-effect for the unit. Our unit is the country (`country_name`)`. What is the coefficient for the interaction now? Round to two digits.
+
+```{r exercise2, exercise = TRUE}
+
+
+```
+
+
+```{r q6, echo = FALSE}
+question_text(" What is the coefficient for the interaction now?",
+  answer("-0.01", correct = T),
+  allow_retry = TRUE,
+  incorrect = "Hint: is the fixed-effect correctly specified?"
+)
+```
+
+```{r q7, echo = FALSE}
+question("Comparing the two coefficients, what do you conclude?",
+  answer("Accounting for the unobserved, constant variation between countries has shown that there is no effect of World Bank membership that is conditional on being a democracy.", correct = T),
+  answer("We have different numbers of observation and therefore the coefficients differ.", message = "Take a look at the number of observations included in each model. Are they the same or do they differ?"),
+  answer("The coefficients are the same.", message = "If the coefficients are the same, you may want to retrace your steps and check your code whether there is an error."),
+  random_answer_order = TRUE,
+  allow_retry = T
+)
+```
+
+
+In the final step, we want to calculate predicted values. Remember from the last sessions that predicted values can help us to communicate the results of our analysis. In the following section, the model has already been specified. Please calculate predicted values for membership in the **World Bank**. Specify scenarios for Uruguay and Japan. In which of the two countries is the predicted value for the maximum duration of World Bank membership higher? Use the `fe_model` specified below.
+
+
+```{r exercise3, exercise = TRUE}
+fe_model <- lm(n_RAI ~ length_EU + length_world + democ + gdp_capita + population_size + nationalization + country_name, data = df_learnr12)
+
+```
+
+```{r q8, echo = FALSE}
+question("Comparing the predicted values, in which country is the preiction for sub-national authority higher?",
+  answer("Japan", message = "Keep in mind that confidence intervals are important!"),
+  answer("Uruguay", message = "Keep in mind that confidence intervals are important!"),
+  answer("Unclear, because the CIs overlap.", correct = T),
+  random_answer_order = TRUE,
+  allow_retry = T)
+```
+
+## Submit
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(default_ui(url =
+  "https://docs.google.com/spreadsheets/d/1KNdne1kXXIHybooh0Z71SYrVSd1NBfBTm60PhYeTsnQ/edit?usp=sharing"))
+```
